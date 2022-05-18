@@ -1,0 +1,12 @@
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="News\CustomWidget\Block\Widget\News" id="latest_news">
+       <label>Latest News</label>
+       <description>Tin tức mới nhất</description>
+       <parameters>
+           <parameter name="title" visible="true" xsi:type="text">
+               <label>Tiêu đề của chức năng</label>
+           </parameter>
+       </parameters>
+   </widget>
+</widgets>

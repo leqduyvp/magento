@@ -1,0 +1,126 @@
+<?php if ($block->getData('title')) : ?>
+    <div class="hb-wrapper above-padding below-padding" style="background: #ffffff;">
+        <div class="page-title-main">
+            <strong><?php echo $block->getData('title'); ?> </strong>
+        </div>
+        <div class="block-content">
+            <?php
+            $xml = "https://vnexpress.net/rss/kinh-doanh.rss";
+
+            $result = simplexml_load_file($xml);
+
+            ?>
+            <style>
+                .container {
+                    margin-top: 40px;
+                    margin-bottom: 10px;
+                    padding-left: 3px;
+                    display: inline-block;
+                    float: left;
+                    border: #E0E0E0 1px solid;
+                    border-radius: 5px;
+                    background-color: #fff;
+                    padding-bottom: 25px;
+                    width: 98%;
+                    height: 500px;
+                    overflow: auto;
+                }
+
+
+                .container>.header {
+                    background-color: #74b9ff;
+                    color: #ffffff;
+                    border-radius: 5px;
+                    text-align: center;
+                    padding: 10px;
+                    margin-bottom: 20px;
+                }
+
+                .chi-container {
+                    width: 250px;
+                    height: 400px;
+                    display: inline-block;
+                }
+
+                .title {
+                    display: block;
+                    height: 80px;
+                }
+
+                .container h3 {
+                    width: 90%;
+                    margin: 1px;
+                    line-height: 150%;
+                }
+
+                .desc img {
+                    width: 100%;
+                    height: 153px;
+                    color: transparent;
+                    padding-bottom: 5px;
+                    object-fit: cover;
+                }
+
+                .desc {
+                    display: block;
+                    width: 100%;
+                    height: 170px;
+                    font-size: 16px;
+                    padding-bottom: 3px;
+                }
+
+                .desc>a>img {
+                    align-self: center;
+                }
+
+                .pubDate {
+                    display: block;
+                    margin-top: 95px;
+                    height: 20px;
+                }
+
+                .link-news>a {
+                    text-decoration: none;
+                    background-color: #badc58;
+                    color: #ffffff;
+                    position: fixed;
+                    border-radius: 5px 0px 0px 5px;
+                    right: 0px;
+                    top: 320px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 10px 10px 10px 5px;
+                    width: 100px;
+                    z-index: 2;
+                }
+
+                .link-news>a:hover {
+                    background-color: #f1c40f;
+                }
+            </style>
+            <div class="container">
+                <div class="header" id="news">
+                    <h3 style="font-size: 25px;">Tin tức mới nhất</h3>
+                </div>
+                <div class="link-news">
+                    <a href="#news">News</a>
+                </div>
+                <div class="body">
+                    <?php
+                    foreach ($result->channel->item as $itm) {
+                    ?>
+                        <div class="chi-container">
+                            <h3 class="title"><a href="<?php echo $itm->link; ?>" target="_self" style="color:black; text-decoration: none;height: 40px;
+            "><?php echo $itm->title ?></a></h3>
+                            <div class="desc">
+                                <?php echo $itm->description; ?>
+                            </div>
+                            <div class="pubDate">
+                                <span style="font-size: 10px;"><?php echo $itm->pubDate; ?></span>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+            <?php endif; ?>

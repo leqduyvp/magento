@@ -1,0 +1,65 @@
+version: '3.7'
+services:
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./src:/var/www/html/magento2
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - data:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: magentodb
+      MYSQL_USER: magento
+      MYSQL_PASSWORD: "123456"
+    healthcheck:
+      test: mysqladmin ping -h localhost -u root -pexample
+      timeout: 10s
+      retries: 5
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+
+  php:
+    build: ./php
+    restart: always
+    volumes:
+      - ./src:/var/www/html/magento2
+      - init:/init
+    depends_on:
+      mysql:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+
+  elasticsearch:
+    image: elasticsearch:7.17.3
+    environment:
+      - discovery.type=single-node
+    restart: always
+    logging:
+      driver: none
+    healthcheck:
+      test: curl -s http://elasticsearch:9200
+      timeout: 10s
+      retries: 5
+
+volumes:
+  init:
+  data:

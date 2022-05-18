@@ -1,0 +1,12 @@
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="Weather\CustomWidget\Block\Widget\WeatherToday" id="weather_today">
+       <label>Weather</label>
+       <description>Thời tiết Hà Nội hôm nay</description>
+       <parameters>
+           <parameter name="title" visible="true" xsi:type="text">
+               <label>Tiêu đề của chức năng</label>
+           </parameter>
+       </parameters>
+   </widget>
+</widgets>
